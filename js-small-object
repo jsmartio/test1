@@ -1,0 +1,69 @@
+<html>
+
+<style>
+.ddefault{
+	width:200px;
+	height:200px;
+	margin:30px;
+	padding:30px;
+	background-color:#dddddd;
+}
+.addBorder{
+	border: solid 1px #333 !important;
+}
+.removeBorder{
+	border: 0px !important;
+}
+.redBG {
+	background-color:#400;
+}
+.blueBG {
+	background-color:#004;
+}
+</style>
+
+
+<script type="text/javascript">
+	var myObj = {
+		writeTime:  function(){
+			var d = new Date();
+			document.getElementById('div2').innerHTML += '<br>Some new content!';
+			document.getElementById('div3').innerHTML += "<br>" + d.getTime();
+		},
+		addBorder:  function (){
+			//document.getElementsByClassName['ddefault'].classList.add("addBorder");
+			document.getElementsById['div1'].classList.add("addBorder");
+		},
+		removeBorder: function(){
+			//document.getElementsByClassName['ddefault'].classList.remove("addBorder");
+			document.getElementsById['div1'].classList.remove("addBorder");
+		},
+		addBorder: function(){
+			document.getElementsByClassName['ddefault'].classList.toggle("addBorder");
+		}
+	};
+
+	var init = function(){													/// after page is loaded add listeners
+		b1.addEventListener( 'click',myObj.writeTime, false);
+		b2.addEventListener( 'click',myObj.addBorder, false);
+		b3.addEventListener( 'click',myObj.removeBorder, false);
+		b4.addEventListener( 'click',myObj.toggleBorder, false);
+		
+	};
+	window.addEventListener( 'DOMContentLoaded', init, false);;
+
+</script>
+
+	<body>
+
+		<div class="ddefault" id="div1">D1</div>
+		<div class="ddefault" id="div2">D2</div>
+		<div class="ddefault" id="div3">initial content</div>
+
+		<button id="b1">Update time</button>
+		<button id="b2">Add Border</button>
+		<button id="b3">Remove Border</button>
+		<button id="b4">toggle Border</button>
+	</body>
+
+</html>

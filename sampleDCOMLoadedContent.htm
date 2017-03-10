@@ -1,0 +1,49 @@
+<html>
+
+
+<script type="text/javascript">
+
+	var box = {
+		height:		10,
+		width: 		10,
+		bgc:			"#eeeeee",
+		getArea:	function(){
+			var sb = document.getElementById('show');
+			sb.innerHTML = box.height*box.width;
+		}
+	}
+	var sty = {
+		sColorRed:		function(){
+			document.getElementById('show').style.backgroundColor = '#F2BBBB';
+		},
+		sColorBlack:	function(){
+			document.getElementById('show').style.backgroundColor = '#C4C4C4';
+		},
+		doPad:			function(){
+			var  pAmount = document.getElementById('pNum').value;
+			document.getElementById('show').style.padding = pAmount;
+		}
+	}
+	var init = function(){													/// after page is loaded add listeners
+		act.addEventListener( 'click', box.getArea, false);
+		cRed.addEventListener( 'click', sty.sColorRed, false);
+		cBlk.addEventListener( 'click', sty.sColorBlack, false);
+		dPad.addEventListener( 'click', sty.doPad, false);
+	}
+	window.addEventListener( 'DOMContentLoaded', init, false)
+
+</script>
+
+	<body>
+
+	<div id="show">place Holder</div>
+
+
+	<button id="act">Do it</button>
+	<button id="cRed">red</button>
+	<button id="cBlk">black</button>
+	
+	<br><input type=text name="pNum" id="pNum" size="3"> -> <button id="dPad">Padding</button>
+	</body>
+
+</html>

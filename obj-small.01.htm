@@ -1,0 +1,45 @@
+<html>
+<head>
+<script>
+
+
+var car = {
+	c_wheels:"round",
+  c_color:"red",
+  c_tires:4,
+  c_make: ['bmw','X5'],
+  b1f: function() {
+  	alert("ignition on");
+  },
+  b2f: function(){
+  	alert("testing breaks");
+  },
+  b3f: function(){
+  	alert("info");
+  	//alert("color:"+this.color+"\nMake"+this.cmake[0]+" Model"+this.cmake[1]);
+  }
+};
+
+
+
+var init = function(){
+
+	b1.addEventListener( 'click', car.b1f, false);
+	b2.addEventListener('click',car.b2f,false);
+  	b3.addEventListener('click',car.b3f,false);
+}
+
+	window.addEventListener( 'DOMContentLoaded', init, false)
+
+	//window.addEventListener('DOMcontentLoaded',init,false);
+
+</script>
+
+</head>
+<body>
+
+	<button id="b1">B1</button>
+	<button id="b2">B2</button>
+	<button id="b3">B3</button>
+
+</body>

@@ -1,0 +1,91 @@
+
+<html>
+<head>
+<?php /*
+
+     <link href="/assets/css/bootstrap.css" type="text/css" rel="stylesheet" />
+    <script src="/assets/js/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="/assets/js/utils.js" type="text/javascript"></script>
+    <script src="/assets/js/bootstrap.js" type="text/javascript"></script>
+    */ ?>
+    
+	<script>
+	function showValueY(tVal) {
+  		document.getElementById("rangeY").innerHTML = document.getElementById("sys").value;
+  		document.getElementById("card").style.transform = "rotateY("+document.getElementById("sys").value+"deg)";
+	}
+	function showValueX(tVal) {
+		document.getElementById("rangeX").innerHTML = document.getElementById("sxs").value;
+  		document.getElementById("card").style.transform = "rotateX"+document.getElementById("sxs").value+"deg)";
+	}
+
+	var init = new function() {
+	  //sys.addEventListener("onmouseup onmousedown", showValueY, false);
+	 // sxs.addEventListener("onmouseup onmousedown", showValueX, false);
+	}
+	window.addEventListener("DOMContentLoaded", init, false);
+	</script>
+    
+    
+	<style>
+	#ydiv{
+    	z-index:8;
+    	-webkit-transform: rotate(90deg);
+    	 -moz-transform: rotate(90deg);
+    	  -o-transform: rotate(90deg);
+    	   -ms-transform: rotate(90deg);
+    	    transform: rotate(90deg);
+    	position:absolute; 
+    	top:200 !important;
+    	left:400 !important;
+	}
+
+	#xdiv{
+    	z-index:9;
+    	position:absolute; 
+    	top:400 !important;
+    	left:100 !important;
+	}
+	#workspace {
+		position:absolute;
+		top:10;
+		left 10;
+		width:480px;
+		height:380px;
+		border: 1px solid #ddd;
+		padding:25px;
+	}
+	#card {
+		height:250px !important;
+		width:175px important;
+		background-color:#f00;
+		font-size:30px;
+		padding:50px;
+		margin:10px;
+	}
+</style>
+    
+</head>
+
+
+
+<body>
+
+<div id="ydiv">
+Verticle (spin on Y)<br>
+<input type="range" id="sys" min="0" max="360" value="0" step="5" onChange="javscript:showValueY(this.value)" style="width:300px !important;"/>
+<span id="rangeY" class="numShow">0</span>
+</div>
+
+<div id="xdiv">
+Horizontal (spin on X)<br>
+<input type="range" id="sxs" min="0" max="360" value="0" step="5"  onChange="javscript:showValueX(this.value)" style="width:300px !important;"/>
+<span id="rangeX" class="numShow">0</span>
+</div>
+
+<div id="workspace">
+	<div id="card">1</div>
+</div>
+
+</body>
+</html>

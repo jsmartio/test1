@@ -1,0 +1,637 @@
+
+<html>
+<head>
+
+    <link href="/assets/css/bootstrap.css" type="text/css" rel="stylesheet" />
+    <script src="/assets/js/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="/assets/js/utils.js" type="text/javascript"></script>
+    <script src="/assets/js/bootstrap.js" type="text/javascript"></script>
+    
+    
+
+    
+    
+	<style>
+	
+	/* keyframes for rotating animation */
+@-webkit-keyframes spinY {
+  from { transform: rotateY(0); }
+  to   { transform: rotateY(360deg); }
+}
+@keyframes spinY {
+  from { transform: rotateY(0); }
+  to   { transform: rotateY(360deg); }
+}
+
+@-webkit-keyframes noAnim {}
+@keyframes noAnim {}
+	
+	body {
+		font: 1em "Open Sans", sans-serif;
+		padding:10px !important;
+	}
+	#anim {
+		width: 150px;
+		height: 150px;
+		position: relative;
+		padding:0px !important;
+		margin:0px !important;
+		
+    	-webkit-perspective: 500000px;
+    	 -moz-perspective: 500000px;
+    	  -o-perspective: 500000px;
+    	   perspective: 500000px;
+
+  		-webkit-transform-style: preserve-3d;
+  		 -moz-transform-style: preserve-3d;
+  		  -o-transform-style: preserve-3d;
+  		   transform-style: preserve-3d;
+  		
+  		-webkit-animation: spinY 6s infinite linear;  /* animationName duration iteration type */
+  		 -moz-animation: spinY 6s infinite linear;  
+  		  -o-animation: spinY 6s infinite linear;  
+  		   animation: spinY 6s infinite linear;  
+  			
+  		-webkit-transition: all 2s linear;					/* propertyEffected duration iterationType */
+  		 -moz-transition: all 2s linear;
+  		  -o-transition: all 2s linear;
+  		    transition: all 2s linear;
+    }	
+	#ydivControl{ 	/* controls for y axis */
+    	-webkit-transform: rotate(90deg);
+    	 -moz-transform: rotate(90deg);
+    	  -o-transform: rotate(90deg);
+    	   -ms-transform: rotate(90deg);
+    	    transform: rotate(90deg);
+    	/*position:relative; 
+    	top:720 !important;
+    	left:270 !important; */
+    	margin-top:160px;
+    	margin-left:-80px;
+    	z-index:35 !important
+	}
+	#xdivControl{   /* controls for x axis */
+    	/*position:absolute; 
+    	top:900 !important;
+    	left:50 !important;*/
+    	margin-left:70px;
+    	margin-top:0px;
+	}
+	#workspace {
+		/*position:absolute;
+		top:540;
+		left 40; */
+		margin-left:100px;
+		margin-top:-180px;
+		/*width:500px;
+		height:500px; */
+		padding:80px;
+		perspective: 100000px;
+		transform-style: preserve-3d;
+/*		border:2px dotted #f00; */
+	}
+	.dFace {										/* shared card values */
+		backface-visibility: hidden; 
+		height:250px !important;
+		width:250px !important;
+		font-size:30px;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	#cardFront {									/* front face of card */
+
+		background: #87e0fd; /* Old browsers */
+		background: -moz-linear-gradient(top, #87e0fd 0%, #53cbf1 50%, #0676cc 100%); /* FF3.6-15 */
+		background: -webkit-linear-gradient(top, #87e0fd 0%,#53cbf1 50%,#0676cc 100%); /* Chrome10-25,Safari5.1-6 */
+		background: linear-gradient(to bottom, #87e0fd 0%,#53cbf1 50%,#0676cc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', endColorstr='#0676cc',GradientType=0 ); /* IE6-9 */
+
+		z-index:2;
+		transform: rotateY(0deg);
+		-webkit-transform: translateZ( 1px );
+		  -moz-transform: translateZ( 1px );
+		   -o-transform: translateZ( 1px );
+              transform: translateZ( 1px );
+	}
+	#cardBack {									/* back face of card */
+		background: #fefcea; /* Old browsers */
+		background: -moz-linear-gradient(top, #fefcea 0%, #afd831 100%); /* FF3.6-15 */
+		background: -webkit-linear-gradient(top, #fefcea 0%,#afd831 100%); /* Chrome10-25,Safari5.1-6 */
+		background: linear-gradient(to bottom, #fefcea 0%,#afd831 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#afd831',GradientType=0 ); /* IE6-9 */
+		transform: rotateY(180deg);
+		transform-style: preserve-3d;
+	}
+	.numShow {
+		 width:31px !important;
+		 height:18px !important;
+		 background-color:#cceabb;
+		 padding:4px !important;
+	}
+	#yaxis {
+/*		border: dotted 2px #888;		*/
+		perspective: 10000px;
+		transform-style: preserve-3d;
+		height:102px;
+		width:202px;
+	}
+	#xaxis {
+/*		border: dotted 2px #0a0;	*/	
+		perspective: 10000px;
+		transform-style: preserve-3d;		
+		height:102px;
+		width:202px;
+		
+	}
+	
+iframe { 
+    outline: none !important;
+    width:100% !important;
+    border: 1px solid #dddddd;
+    -webkit-border-radius: 12px;-moz-border-radius: 12px;border-radius: 12px;
+}
+
+
+/*   cube info */
+
+  #cube {
+      	width: 100%;
+      	height: 100%;
+      	position: absolute;
+      	-webkit-transform-style: preserve-3d;
+        	 -moz-transform-style: preserve-3d;
+        	   -o-transform-style: preserve-3d;
+        	      transform-style: preserve-3d;
+      	-webkit-transition: -webkit-transform 1s;
+        	 -moz-transition: -moz-transform 1s;
+        	   -o-transition: -o-transform 1s;
+        	      transition: transform 1s;
+		margin-top:0px !important;
+		padding:0px !important;
+		font-size:20px;
+		color:#ffffff !important;
+		line-height:150px;
+
+    }
+
+    #cube figure {
+		display: block;
+		position: absolute;
+		/*border: 1px solid #CCC; */
+		font-weight: bold;
+		text-align: center;
+    }
+
+    #cube.panels-backface-invisible figure {
+      -webkit-backface-visibility: hidden;
+         -moz-backface-visibility: hidden;
+           -o-backface-visibility: hidden;
+              backface-visibility: hidden;
+    }
+
+    #cube #front  		{ background: hsla(358, 22%, 48%, .8); }
+    #cube #back   	{ background: hsla(358, 22%, 48%, .8); }
+    #cube #right  		{ background: hsla(358, 71%, 48%, .8); }
+    #cube #left   		{ background: hsla(358, 71%, 48%, .8); }
+    #cube #top    		{ background: hsla(358, 44%, 48%, .8); }
+    #cube #bottom 	{ background: hsla(358, 44%, 48%, .8); }
+
+
+     #cube #front  {
+       border:1px solid #eee;
+		width: 150px;
+		height: 150px;
+		-webkit-transform: translateZ( 75px );
+		  -moz-transform: translateZ( 75px );
+		   -o-transform: translateZ( 75px );
+              transform: translateZ( 75px );
+            
+    }
+    #cube #back   {
+       border:1px solid #eee;
+		width: 150px;
+		height: 150px;
+      -webkit-transform: rotateX( -180deg ) translateZ( 75px );
+         -moz-transform: rotateX( -180deg ) translateZ( 75px );
+           -o-transform: rotateX( -180deg ) translateZ( 75px );
+              transform: rotateX( -180deg ) translateZ( 75px );
+    }
+    #cube #right {
+       border:1px solid #eee;
+		width: 150px;
+		height: 150px;
+		
+      -webkit-transform: rotateY(   90deg ) translateZ( 75px );
+         -moz-transform: rotateY(   90deg ) translateZ( 75px );
+           -o-transform: rotateY(   90deg ) translateZ( 75px );
+              transform: rotateY(   90deg ) translateZ( 75px );
+    }
+    #cube #left {
+       border:1px solid #eee;
+		width: 150px;
+		height: 150px;
+      -webkit-transform: rotateY(  -90deg ) translateZ( 75px );
+         -moz-transform: rotateY(  -90deg ) translateZ( 75px );
+           -o-transform: rotateY(  -90deg ) translateZ( 75px );
+              transform: rotateY(  -90deg ) translateZ( 75px );
+    }
+    #cube #top {
+       border:1px solid #eee;
+		width: 150px;
+		height: 150px;
+      -webkit-transform: rotateX(   90deg ) translateZ( 75px );
+         -moz-transform: rotateX(   90deg ) translateZ( 75px );
+           -o-transform: rotateX(   90deg ) translateZ( 75px );
+              transform: rotateX(   90deg ) translateZ( 75px );
+    }
+    #cube #bottom {
+       border:1px solid #eee;
+		width: 150px;
+		height: 150px;
+      -webkit-transform: rotateX(  -90deg ) translateZ( 75px );
+         -moz-transform: rotateX(  -90deg ) translateZ( 75px );
+           -o-transform: rotateX(  -90deg ) translateZ( 75px );
+              transform: rotateX(  -90deg ) translateZ( 75px );
+    }
+</style>
+
+	<script>
+	var newHandle = function(event) { 
+
+		var range = '';
+		var newSpot = 0;
+		var rotate = '';
+		var axis = '';	
+		var elem = '';	
+		var offset = 0;
+		var current = 0;	
+		if(this.id == 'mx'){ 			range = "rangeX"; axis = "xaxis"; elem = "sxs"; offset=-5; rotate = "rotateX"; }
+		else if(this.id == 'px'){ 		range = "rangeX"; axis = "xaxis"; elem = "sxs"; offset=5; rotate = "rotateX"; }
+		else if(this.id == 'my'){ 		range = "rangeY"; axis = "yaxis"; elem = "sys"; offset=-5; rotate = "rotateY"; }
+		else if(this.id == 'py'){ 		range = "rangeY"; axis = "yaxis"; elem = "sys"; offset=5; rotate = "rotateY"; }
+
+		newSpot = parseInt(document.getElementById(range).innerHTML) + parseInt(offset);
+		if (newSpot >= 0 && newSpot <=360){
+			document.getElementById(range).innerHTML = newSpot;
+			document.getElementById(elem).value = newSpot;
+			document.getElementById(axis).style.transform = rotate+"("+newSpot+"deg)"; //transform: rotateY(0deg);
+		}
+	};
+	
+	function showValueY(tVal) {
+  		document.getElementById("rangeY").innerHTML = document.getElementById("sys").value;			// move 
+  		document.getElementById("yaxis").style.transform = "rotateY("+document.getElementById("sys").value+"deg)";
+	}
+	function showValueX(tVal) {
+		document.getElementById("rangeX").innerHTML = document.getElementById("sxs").value;
+  		document.getElementById("xaxis").style.transform = "rotateX("+document.getElementById("sxs").value+"deg)";
+	}
+
+	function init() {
+	 	mx.addEventListener("click", newHandle, false);
+	 	px.addEventListener("click", newHandle, false);
+	 	my.addEventListener("click", newHandle, false);
+	 	py.addEventListener("click", newHandle, false);
+	 	console.log("DOM fully loaded and parsed");
+	}
+	window.addEventListener("DOMContentLoaded", init, false);
+
+	/* begin jquery */
+	$(document).ready(function(){
+		//$("#backRotate").change(function(){
+		///	var rot = $("#backRotate").val();
+		//	alert (rot);
+		//});
+	
+		$(".upd-dyna").blur(function(){
+			//alert($(this).val() + "id:"+$(this).attr("id"));
+			var id_string = $(this).attr("id");
+			var temp_id = id_string.split("-");
+			var the_attribute = temp_id[2];
+			var the_div = temp_id[1];
+			var this_val = $(this).val();
+			$("#show1").val("id[2]: "+the_attribute);
+			$("#show2").val("param[1]: "+the_div);
+			$("#show3").val("val: "+this_val);
+
+			if(the_div == 'right' || the_div == 'left'){   // c-front-height
+				if(the_attribute =="width"){
+					$("#left").css("width",this_val); 		$("#c-left-width").val(this_val);	$(".left-w").fadeOut().text(this_val).fadeIn();
+					$("#right").css("width",this_val);		$("#c-right-width").val(this_val);	$(".right-w").fadeOut().text(this_val).fadeIn();
+					$("#top").css("height",this_val);		$("#c-top-height").val(this_val);	$(".top-h").fadeOut().text(this_val).fadeIn();
+					$("#bottom").css("height",this_val);		$("#c-bottom-height").val(this_val);	$(".bottom-h").fadeOut().text(this_val).fadeIn();
+					//$("#back").css("translateZ",this_val/2);
+				} else if (the_attribute == "height") {
+					$("#left").css("height",this_val);		$("#c-left-height").val(this_val);	$(".left-h").fadeOut().text(this_val).fadeIn();
+					$("#right").css("height",this_val);		$("#c-right-height").val(this_val);	$(".right-h").fadeOut().text(this_val).fadeIn();
+					$("#front").css("height",this_val);		$("#c-front-height").val(this_val); $(".front-h").fadeOut().text(this_val).fadeIn();
+					$("#xaxis").css("height",this_val);
+					$("#yaxis").css("height",this_val);
+					$("#cube").css("line-height",this_val);
+					$("#back").css("height",this_val);		$("#c-back-height").val(this_val);	$(".back-h").fadeOut().text(this_val).fadeIn();
+					$("#top").css("width",this_val);		$("#c-top-width").val(this_val);	$(".top-w").fadeOut().text(this_val).fadeIn();
+					$("#bottom").css("width",this_val);		$("#c-bottom-width").val(this_val);	$(".bottom-w").fadeOut().text(this_val).fadeIn();
+					
+					//$("#back").css("translateZ",this_val/2);
+
+				}
+
+			} else if(the_div == 'top' || the_div == 'bottom'){
+				if(the_attribute =="width"){
+					$("#left").css("height",this_val);		$("#c-left-height").val(this_val);	$(".left-h").fadeOut().text(this_val).fadeIn();
+					$("#right").css("height",this_val);		$("#c-right-height").val(this_val);	$(".right-h").fadeOut().text(this_val).fadeIn();
+					$("#top").css("width",this_val);		$("#c-top-width").val(this_val);	$(".top-w").fadeOut().text(this_val).fadeIn();
+					$("#bottom").css("width",this_val);		$("#c-bottom-width").val(this_val);		$(".bottom-w").fadeOut().text(this_val).fadeIn();
+					//$("#back").css("translateZ",this_val/2);
+				} else if (the_attribute == "height") {
+					$("#left").css("width",this_val);		$("#c-left-width").val(this_val);		$(".left-w").fadeOut().text(this_val).fadeIn();
+					$("#right").css("width",this_val);		$("#c-right-width").val(this_val);		$(".right-w").fadeOut().text(this_val).fadeIn();
+					$("#top").css("height",this_val);		$("#c-top-height").val(this_val);		$(".top-h").fadeOut().text(this_val).fadeIn();
+					$("#bottom").css("height",this_val);		$("#c-bottom-height").val(this_val);		$(".bottom-h").fadeOut().text(this_val).fadeIn();
+					//$("#back").css("translateZ",this_val/2);
+				}			
+
+			
+			} else if(the_div == 'front' || the_div == 'back'){
+				if(the_attribute =="width"){
+					$("#front").css("width",this_val);		$("#c-front-width").val(this_val);  $(".front-w").fadeOut().text(this_val).fadeIn();
+					$("#xaxis").css("width",this_val);		
+					$("#yaxis").css("width",this_val);		
+					$("#cube").css("line-height",this_val);
+					$("#back").css("width",this_val);		$("#c-back-width").val(this_val);		$(".back-w").fadeOut().text(this_val).fadeIn();
+					$("#top").css("width",this_val);		$("#c-top-width").val(this_val);		$(".top-w").fadeOut().text(this_val).fadeIn();
+					$("#bottom").css("width",this_val);		$("#c-bottom-width").val(this_val);		$(".bottom-w").fadeOut().text(this_val).fadeIn();
+					//$("#").css("translateZ",this_val/2);
+				} else if (the_attribute == "height") {
+					$("#front").css("height",this_val);		$("#c-front-height").val(this_val);	$(".front-h").fadeOut().text(this_val).fadeIn();
+					$("#xaxis").css("height",this_val);
+					$("#yaxis").css("height",this_val);
+					$("#back").css("height",this_val);		$("#c-back-height").val(this_val);		$(".back-h").fadeOut().text(this_val).fadeIn();
+					$("#left").css("height",this_val);		$("#c-left-height").val(this_val);		$(".left-h").fadeOut().text(this_val).fadeIn();
+					$("#right").css("height",this_val);		$("#c-right-height").val(this_val);		$(".right-h").fadeOut().text(this_val).fadeIn();
+					//$("#").css("translateZ",this_val/2);
+				}						
+			}
+			
+			if(the_attribute == 'o') {	//z-left-o
+				if(the_div == 'front'){
+					$("#"+the_div).css('-webkit-transform','translateZ(' +  this_val + 'px)'); 
+					$(".front-z").fadeOut().text(this_val).fadeIn();
+				} else if(the_div == 'back'){
+					$("#"+the_div).css('-webkit-transform','rotateX( -180deg ) translateZ(' +  this_val + 'px)'); 
+					$(".back-z").fadeOut().text(this_val).fadeIn();
+				} else if(the_div == 'left'){
+					$("#"+the_div).css('-webkit-transform','rotateY(  -90deg ) translateZ(' +  this_val + 'px)'); 
+					$(".left-z").fadeOut().text(this_val).fadeIn();
+				} else if(the_div == 'right'){
+					$("#"+the_div).css('-webkit-transform','rotateY(  90deg ) translateZ(' +  this_val + 'px)'); 
+					$(".right-z").fadeOut().text(this_val).fadeIn();
+				} else if(the_div == 'top'){
+					$("#"+the_div).css('-webkit-transform','rotateX(   90deg ) translateZ(' +  this_val + 'px)'); 
+					$(".top-z").fadeOut().text(this_val).fadeIn();
+				} else if(the_div == 'bottom'){
+					$("#"+the_div).css('-webkit-transform','rotateX(   -90deg ) translateZ(' +  this_val + 'px)'); 
+					$(".bottom-z").fadeOut().text(this_val).fadeIn();
+				}			
+			}
+
+			$("#"+the_attribute).css(temp_id[2],this_val);
+		});
+	
+		$("#do_all").click(function(){
+			var all_val = $("#all_set").val();
+			$("#cFront").val(all_val);
+			$("#cBack").val(all_val);
+			$("#cLeft").val(all_val);
+			$("#cRight").val(all_val);
+			$("#cTop").val(all_val);
+			$("#cBot").val(all_val);
+			
+			$("#contain_height").val(all_val);
+			$("#contain_width").val(all_val);
+		});
+		
+	});
+</script>
+
+<script>
+
+	function animStart(){
+		document.getElementById("anim").style.WebkitAnimationName = "spinY";
+	}
+	function animPause(){
+		var e = document.getElementById("anim");
+		if(e.style.webkitAnimationPlayState == "paused") 	e.style.webkitAnimationPlayState = "running";
+		else 																		e.style.webkitAnimationPlayState = "paused";
+	}
+	function animFwd(){
+		document.getElementById("anim").style.animationDirection = "normal";
+	}
+	function animRev(){
+		document.getElementById("anim").style.animationDirection = "reverse";
+	}
+	function animAlt(){
+		document.getElementById("anim").style.animationDirection = "alternate";
+	}
+	function animStop(){
+		document.getElementById("anim").style.WebkitAnimationName = "noAnim";
+	}
+
+	function init() {
+
+	 	animatePause.addEventListener("click", animPause, false);
+	 	animateStart.addEventListener("click", animStart, false);
+	 	animateStop.addEventListener("click", animStop, false);
+	 	animateRev.addEventListener("click", animRev, false);
+	 	animateFwd.addEventListener("click", animFwd, false);
+	 	animateAlt.addEventListener("click", animAlt, false);
+	 	document.getElementById("anim").style.WebkitAnimationName = "noAnim";
+	 	console.log("DOM fully loaded and parsed");
+	}
+	window.addEventListener("DOMContentLoaded", init, false);
+
+	</script>
+
+</head>
+
+<body>
+<div class="row" style="padding:20px">
+
+		<table  class="table table-striped" style="width:400px">
+			<tr><td># </td>
+				<td>loc</td>
+				<td>Height</td>
+				<td>Width</td>
+				<td>ZTrans</td>
+			</tr>
+			<tr>
+				<td>001 &nbsp; </td><td>cFront</td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="cFrontH" id="c-front-height" value="150" size="5"></td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="cFrontW" id="c-front-width" value="150" size="5"></td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="zFront" id="z-front-o" value="75" size="5"></td>
+			</tr>
+			<tr>
+				<td>002 &nbsp; </td>
+				<td>cBack</td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="cBackH" id="c-back-height" value="150" size="5"></td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="cBackW" id="c-back-width" value="150" size="5"></td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="zBack" id="z-back-o" value="75" size="5"></td>
+			</tr>
+			<tr><td>(4) &nbsp; </td>
+				<td>cLeft</td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="cLeftH" id="c-left-height" value="150" size="5"></td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="cLeftW" id="c-left-width" value="150" size="5"></td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="zLeft" id="z-left-o" value="75" size="5"></td>
+			</tr>
+			<tr>
+				<td>(3) &nbsp; </td>
+				<td>cRight</td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="cRightH" id="c-right-height" value="150" size="5"></td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="cRightW" id="c-right-width" value="150" size="5"></td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="zRight" id="z-right-o" value="75" size="5"></td>
+			</tr>
+			<tr>
+				<td>005 &nbsp; </td><td>cTop</td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="cTopH" id="c-top-height" value="150" size="5"></td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="cTopW" id="c-top-width" value="150" size="5"></td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="zTop" id="z-top-o" value="75" size="5"></td>
+			</tr>
+			<tr>
+				<td>006 &nbsp; </td>
+				<td>cBot</td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="c-Bottom-H" id="c-bottom-height" value="150" size="5"></td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="c-Bottom-W" id="c-bottom-width" value="150" size="5"></td>
+				<td><input class="input-sm form-control upd-dyna" type="text" name="z-Bottom-" id="z-bottom-o" value="75" size="5"></td>
+			</tr>
+			<tr>
+				<td colspan="5">
+					<input size="10" type="text" id="show1"><input size="10" type="text" id="show2"><input size="10" type="text" id="show3">
+				</td>
+			</tr>
+		</table>
+</div>
+
+<div class="row" style="z-index:2">
+<h2>&nbsp;&nbsp;Live Example</h2>
+
+  <a name="live"></a> 
+  
+  	<div id="xdivControl">
+		<div class="row">
+			<input type="range" id="sxs" min="0" max="360" value="0" step="5"  onChange="javscript:showValueX(this.value)" style="width:300px !important;"/>
+		</div>
+		<div class="row" style="width:300px">
+			<div class="col-md-8">
+				Horizontal (spin on X) <button id="mx" class="btn btn-default btn-xs">-</button> &#x2194; <button id="px" class="btn btn-default btn-xs">+</button>
+			</div>
+			<div class="col-md-4">
+				<div id="rangeX" class="numShow" >0</div> <font color=blue>degree(s)</font>
+			</div>
+		</div>
+	</div>
+
+	<div id="ydivControl" style="width:300px">
+		<div class="row">
+			<div class="col-md-8">
+				Verticle (spin on Y) <button id="my" class="btn btn-default btn-xs">-</button> &#x2194; <button id="py" class="btn btn-default btn-xs">+</button>
+			</div>
+			<div class="col-md-4">
+				<div id="rangeY" class="numShow" >0</div> <font color=blue>degree(s)</font>
+			</div>
+		</div>
+		<div class="row">
+			<input type="range" id="sys" min="0" max="360" value="0" step="5" onChange="javscript:showValueY(this.value)" style="width:280px !important; "/>
+		</div>
+	</div>
+  
+	<div id="workspace" style="padding:50px">
+		<div id="anim">
+			<div id="yaxis">
+				<div id="xaxis">
+
+    		<div id="cube" class="show-front" style="border:2px #00f solid important">
+      			<figure id="front">1</figure>
+      			<figure id="back">2</figure>
+      			<figure id="right">3</figure>
+      			<figure id="left">4</figure>
+      			<figure id="top">5</figure>
+      			<figure id="bottom">6</figure>
+    		</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+<div class="row">
+	<div style="padding-top:55px; padding-left:20px">
+		<button id=animateStart class="btn btn-default">Spin Start</button> 
+		<button id=animateStop class="btn btn-default">Spin Stop</button>
+		<button id=animatePause class="btn btn-default">Pause Toggle</button>
+		<button id=animateRev class="btn btn-default">Reverse</button>
+		<button id=animateFwd class="btn btn-default">Forward</button>	
+		<button id=animateAlt class="btn btn-default">Alternate</button>
+	</div>
+</div>
+
+
+<div class="row" style="padding:20px">
+
+	<pre>
+    #cube #front  {
+		width: <span class="front-w">150</span>px;
+		height: <span class="front-h">150</span>px;
+		-webkit-transform: translateZ( <span class="front-z">75</span>px );
+		  -moz-transform: translateZ( <span class="front-z">75</span>px );
+		   -o-transform: translateZ( <span class="front-z">75</span>px );
+              transform: translateZ( <span class="front-z">75</span>px );
+    }
+    #cube #back   {
+		width: <span class="back-w">150</span>px;
+		height: <span class="back-h">150</span>px;
+      -webkit-transform: rotateX( -180deg ) translateZ( <span class="back-z">75</span>px );
+         -moz-transform: rotateX( -180deg ) translateZ( <span class="back-z">75</span>px );
+           -o-transform: rotateX( -180deg ) translateZ( <span class="back-z">75</span>px );
+              transform: rotateX( -180deg ) translateZ( <span class="back-z">75</span>px );
+    }
+    #cube #right {
+		width: <span class="right-w">150</span>px;
+		height: <span class="right-h">150</span>px;
+		
+      -webkit-transform: rotateY(   90deg ) translateZ( <span class="right-z">75</span>px );
+         -moz-transform: rotateY(   90deg ) translateZ( <span class="right-z">75</span>px );
+           -o-transform: rotateY(   90deg ) translateZ( <span class="right-z">75</span>px );
+              transform: rotateY(   90deg ) translateZ( <span class="right-z">75</span>px );
+    }
+    #cube #left {
+		width: <span class="left-w">150</span>px;
+		height: <span class="left-h">150</span>px;
+      -webkit-transform: rotateY(  -90deg ) translateZ( <span class="left-z">75</span>px );
+         -moz-transform: rotateY(  -90deg ) translateZ( <span class="left-z">75</span>px );
+           -o-transform: rotateY(  -90deg ) translateZ( <span class="left-z">75</span>px );
+              transform: rotateY(  -90deg ) translateZ( <span class="left-z">75</span>px );
+    }
+    #cube #top {
+		width: <span class="top-w">150</span>px;
+		height: <span class="top-h">150</span>px;
+      -webkit-transform: rotateX(   90deg ) translateZ( <span class="top-z">75</span>px );
+         -moz-transform: rotateX(   90deg ) translateZ( <span class="top-z">75</span>px );
+           -o-transform: rotateX(   90deg ) translateZ( <span class="top-z">75</span>px );
+              transform: rotateX(   90deg ) translateZ( <span class="top-z">75</span>px );
+    }
+    #cube #bottom {
+		width: <span class="bottom-w">150</span>px;
+		height: <span class="bottom-h">150</span>px;
+      -webkit-transform: rotateX(  -90deg ) translateZ( <span class="bottom-z">75</span>px );
+         -moz-transform: rotateX(  -90deg ) translateZ( <span class="bottom-z">75</span>px );
+           -o-transform: rotateX(  -90deg ) translateZ( <span class="bottom-z">75</span>px );
+              transform: rotateX(  -90deg ) translateZ( <span class="bottom-z">75</span>px );
+    }
+	</pre>
+</div>
+		
+</body>
+</html>

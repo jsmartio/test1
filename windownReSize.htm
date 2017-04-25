@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+
+  <title>...</title>
+
+ <link rel="shortcut icon" href="/favicon.ico">
+ 
+ 
+
+    <link href="/assets/css/bootstrap.css" type="text/css" rel="stylesheet" />
+    <link href="/assets/css/cus.css" type="text/css" rel="stylesheet" />
+    <script src="/assets/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src="/assets/js/utils.js" type="text/javascript"></script>
+    <script src="/assets/js/bootstrap.js" type="text/javascript"></script>
+    <script src="/assets/js/jq.js" type="text/javascript"></script>
+    <script src="/assets/js/tooltip.js" type="text/javascript"></script>
+
+    
+    
+<script>
+function w(p){
+	var o = document.getElementById("v");
+	o.innerHTML = p;
+}
+function ss(){  // size snif
+	
+	$( window ).resize(function() {
+  		w("<br>"+$( window ).width());
+	});
+}
+
+$(document).ready(function(){
+	ss();
+	$(function () {
+  		$('[data-toggle="tooltip"]').tooltip()
+	});
+});
+
+</script>
+<style>
+body {
+	background-color:rgb(242, 242, 234);
+	font-family: "Ubuntu Light", arial;
+}
+.outlines{
+	border:1px solid #cccccc !important;
+}
+#nav {
+	background-color:rgb(209, 35, 35);
+	color:#ffffff;
+	padding:5px;
+}
+#nav a:link {
+    color: #efefef;
+}
+#nav a:visited {
+    color: #efefef;
+}
+#nav a:hover {
+    color: #cccccc;
+    text-decoration:none;
+}
+#mbody{
+	color:rgb(209, 35, 35);
+	padding:5px;
+	text-shadow: 1px 1px 1px rgba(150, 150, 150, .5);
+}
+#footer {
+	background-color:rgb(122, 122, 122);
+}
+.logo1{
+	font-family: "Arial Bold", Arial !important;
+	font-weight:400;
+	line-height:30px;
+}
+#ql {
+	float: right;
+}
+</style>
+
+</head>
+<body>
+
+
+<div class="container-fluid">
+  
+  <div id="nav" class="row">
+    <div class="col-xs-6 outlines" id="logo">
+    	<span class="glyphicon glyphicon-th-list"></span>
+    	<span class="logo1">title</span>
+    </div>
+  	<div class="col-xs-6 outlines" id="ql">
+  		<p align="right">
+	  		<a href="#" data-toggle="tooltip" data-placement="left" title="Favorites">faq<span class="glyphicon glyphicon-heart"></span></a>&nbsp;&nbsp;
+
+		</p>
+  	</div>
+  </div>
+  
+  <div id="mbody" class="row">
+	  <div id="v"></div>
+  </div>
+  
+  <div id="footer" class="row "></div>
+</div><!-- end fluid div //-->
